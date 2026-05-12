@@ -332,7 +332,7 @@
             <!-- Support section -->
             <div class="support-text">
                 Need help accessing your account?<br>
-                <a href="https://hopefoundation.onrender.com/index.html" class="support-link">Contact IT Support</a>
+                <a href="../index.html" onclick="sessionStorage.setItem('navigateTo','contact')" class="support-link">Contact Support</a>
             </div>
         </div>
     </main>
@@ -355,9 +355,9 @@
     <footer class="footer">
         <div>© 2024 Hope Foundation. All rights reserved.</div>
         <div class="footer-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Support</a>
+            <a href="javascript:void(0)" onclick="alert('Privacy Policy page is being updated. Please check back soon.')">Privacy Policy</a>
+            <a href="javascript:void(0)" onclick="alert('Terms of Service page is being updated. Please check back soon.')">Terms of Service</a>
+            <a href="../index.html" onclick="sessionStorage.setItem('navigateTo','contact')">Support</a>
         </div>
     </footer>
 

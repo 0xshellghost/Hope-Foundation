@@ -2054,7 +2054,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Check URL hash for admin-dashboard navigation from login
     const hash = window.location.hash;
-    if (hash === '#admin-dashboard') {
+    // Check for portal navigation intent (e.g., from Support/Contact links on portal pages)
+    const navigateTo = sessionStorage.getItem('navigateTo');
+    if (navigateTo) {
+        sessionStorage.removeItem('navigateTo');
+        showSection(navigateTo);
+    } else if (hash === '#admin-dashboard') {
         // Verify admin is logged in
         if (await hasValidAdminSession()) {
             await showSection('admin-dashboard');
@@ -3189,16 +3194,20 @@ function switchStoriesTab(tabName) {
 function submitFeedback(e) {
     e.preventDefault();
     
-    const name = document.getElementById('feedback-name').value;
-    const role = document.getElementById('feedback-role').value;
-    const city = document.getElementById('feedback-city').value;
     const rating = document.getElementById('feedback-rating').value;
+    const type = document.getElementById('feedback-type').value;
     const message = document.getElementById('feedback-message').value;
+    const email = document.getElementById('feedback-email').value;
     
     if (rating === '0') {
         alert('Please select a rating');
         return;
     }
+
+    // Map form fields to testimonial format
+    const name = email ? email.split('@')[0] : 'Anonymous';
+    const role = type.charAt(0).toUpperCase() + type.slice(1);
+    const city = 'Community';
     
     const localFallbackEntry = {
         id: Date.now(),
