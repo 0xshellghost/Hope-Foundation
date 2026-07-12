@@ -1265,9 +1265,12 @@
         const data = await res.json();
 
         if (res.ok && data.token) {
-          // Prevent admin users from using the standard staff portal, and vice versa
-          if (data.staff.role === 'admin') {
+          // Prevent admin users from using the standard staff portal, EXCEPT the demo admin for project reviewers
+          if (data.staff.role === 'admin' && data.staff.email !== 'admin@hopefoundation.org') {
               alert('Administrators must use the dedicated Admin Portal.');
+              // Reset the button state if login is prevented
+              btn.disabled = false;
+              btn.innerHTML = '<i class="fas fa-right-to-bracket"></i> Secure Login';
               return;
           }
 
