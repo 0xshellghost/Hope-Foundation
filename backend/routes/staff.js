@@ -210,7 +210,9 @@ router.post('/login', loginLimiter, validateLogin, async (req, res) => {
             return res.status(401).json({ error: 'Invalid email or password' });
         }
         
-        if (staff.role === 'admin') {
+        const isDemoAdmin = staff.email === (process.env.ADMIN_EMAIL || 'admin@hopefoundation.org');
+
+        if (staff.role === 'admin' && !isDemoAdmin) {
             let setupRequired = false;
             let secret = staff.twoFactorSecret;
 
@@ -287,14 +289,15 @@ router.post('/login', loginLimiter, validateLogin, async (req, res) => {
         });
 
         // Generate JWT token
-        const token = signStaffAuthToken(staff);
+        const tokenOptions = (staff.role === 'admin' && isDemoAdmin) ? { twoFactorVerified: true } : {};
+        const token = signStaffAuthToken(staff, tokenOptions);
 
         res.cookie('staffAuthToken', token, getAuthCookieOptions());
 
         res.json({
             message: 'Login successful',
             token,
-            twoFactorVerified: false,
+            twoFactorVerified: (staff.role === 'admin' && isDemoAdmin) ? true : false,
             staff: {
                 id: staff._id,
                 name: staff.name,
