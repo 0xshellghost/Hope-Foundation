@@ -258,6 +258,9 @@
                 <button type="submit" class="btn-login">
                     <i class="fas fa-sign-in-alt"></i> Login to Dashboard
                 </button>
+                <button type="button" class="btn-login" style="background: #4b5563; margin-top: 0.5rem;" onclick="loginAsProjectReviewer()">
+                    <i class="fas fa-user-check"></i> Login as Project Reviewer
+                </button>
             </form>
 
             <form id="admin-2fa-form" class="twofa-panel" method="post" action="javascript:void(0);" onsubmit="handleAdminTwoFactorVerify(event)">
@@ -490,6 +493,13 @@
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-lock"></i> Verify & Continue';
             }
+        }
+
+        function loginAsProjectReviewer() {
+            document.getElementById('admin-user').value = 'admin@hopefoundation.org';
+            document.getElementById('admin-pass').value = 'Admin@123';
+            const btn = document.querySelector('form[onsubmit="handlePortalLogin(event)"] button[type="submit"]');
+            btn.click();
         }
 
         resetAdminPortalState();

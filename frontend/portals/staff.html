@@ -43,6 +43,9 @@
                         <div class="split-actions" style="margin-top: 1.5rem;">
                             <button class="btn btn-primary" type="submit" style="width: 100%; justify-content: center;"><i class="fas fa-right-to-bracket"></i> Secure Login</button>
                         </div>
+                        <div class="split-actions" style="margin-top: 0.5rem;">
+                            <button class="btn btn-secondary" type="button" style="width: 100%; justify-content: center; background: #4b5563; color: white;" onclick="loginAsProjectReviewer()"><i class="fas fa-user-check"></i> Login as Project Reviewer</button>
+                        </div>
                     </form>
                 </div>
             </section>
@@ -100,5 +103,13 @@
     </div>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script src="./staff-portal.js"></script>
+    <script>
+        function loginAsProjectReviewer() {
+            document.getElementById('email').value = 'admin@hopefoundation.org';
+            document.getElementById('password').value = 'Admin@123';
+            const btn = document.querySelector('form#loginForm button[type="submit"]');
+            btn.click();
+        }
+    </script>
 </body>
 </html>
